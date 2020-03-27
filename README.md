@@ -16,6 +16,7 @@ Execute app/main.py at startup. Please change as necessary.
 ## start
 
 ```sh
+$ docker-compose build
 $ docker-compose up -d
 ```
 
