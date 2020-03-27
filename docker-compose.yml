@@ -5,8 +5,9 @@ services:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/log:/var/log/nginx
+      - ./docker/nginx/log:/var/log/nginx
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
     environment:
       - "TZ=Japan"
     restart: always
@@ -14,7 +15,7 @@ services:
       - 80:80
       - 443:443
     links:
-      - db
+      - web
     tty: true
 
   web:
@@ -23,8 +24,8 @@ services:
       dockerfile: ./docker/web/Dockerfile
     volumes:
       - ./flask:/app
-    ports:
-      - 5000:5000
+    # ports:
+    #   - 5000:5000 # 内部だけでいいのでホストOSには出さない
     links:
       - db
     tty: true
@@ -32,7 +33,7 @@ services:
   db:
     build:
       context: .
-      dockerfile: ./docker/rdb/Dockerfile
+      dockerfile: ./docker/rds/Dockerfile
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: flask
