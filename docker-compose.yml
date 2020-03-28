@@ -24,6 +24,8 @@ services:
       dockerfile: ./docker/web/Dockerfile
     volumes:
       - ./flask:/app
+      - ./docker/web/guniconf.py:/etc/guni/guniconf.py  # いったん/etc以下にする
+      - ./docker/web/log:/var/log/guni
     # ports:
     #   - 5000:5000 # 内部だけでいいのでホストOSには出さない
     links:
@@ -47,3 +49,13 @@ services:
       - ./docker/rds/log:/var/log/mysql
     ports:
       - 3306:3306
+
+  redis:
+    build:
+      context: .
+      dockerfile: ./docker/redis/Dockerfile
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "18025:8025"
