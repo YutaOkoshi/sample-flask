@@ -5,7 +5,7 @@ workers = 2
 worker_class = 'sync'
 
 # Logging
-logfile = '/var/log/guni/app.log'
+logfile = '/var/log/app/guni.log'
 loglevel = 'info'
 logconfig = None
 
